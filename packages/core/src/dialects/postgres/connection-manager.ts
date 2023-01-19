@@ -197,6 +197,15 @@ export class PostgresConnectionManager extends AbstractConnectionManager<PgConne
       void this.pool.destroy(connection);
     });
 
+    connection.once('notice', notice => {
+      debug(`POSTGRES NOTICE: ${notice.code || notice.message}`);
+      console.log('!!!!RRR')
+    });
+    connection.once('notification', notification => {
+      debug(`POSTGRES NOTIFICATION ${notification.code || notification.message}`);
+      console.log('!!!!RRR')
+    });
+
     let query = '';
 
     if (this.sequelize.options.standardConformingStrings !== false && connection.standard_conforming_strings) {
